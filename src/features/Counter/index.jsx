@@ -19,7 +19,6 @@ function Counter() {
 
   const handleIncreaseClick = () => {
     setCount((x) => x + 1);
-    setCount((x) => x + 1);
   };
 
   const handleResetClick = () => {
