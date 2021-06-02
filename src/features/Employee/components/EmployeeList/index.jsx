@@ -7,6 +7,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import FormatAlignLeftOutlinedIcon from '@material-ui/icons/FormatAlignLeftOutlined';
+import TextFormatIcon from '@material-ui/icons/TextFormat';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -17,6 +20,10 @@ EmployeeList.propTypes = {
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
+  },
+  heading: {
+    display: 'flex',
+    alignItems: 'center',
   },
 });
 
@@ -34,9 +41,25 @@ function EmployeeList({ employeeList }) {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Position</TableCell>
+              <TableCell>
+                {' '}
+                <Box className={classes.heading}>
+                  <TextFormatIcon fontSize="small" />
+                  <Typography variant="subtitle2">Name</Typography>
+                </Box>
+              </TableCell>
+              <TableCell>
+                <Box className={classes.heading}>
+                  <AlternateEmailIcon fontSize="small" />
+                  <Typography variant="subtitle2">Email</Typography>
+                </Box>
+              </TableCell>
+              <TableCell>
+                <Box className={classes.heading}>
+                  <FormatAlignLeftOutlinedIcon fontSize="small" />
+                  <Typography variant="subtitle2">Position</Typography>
+                </Box>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
