@@ -1,12 +1,17 @@
+import { CssBaseline } from '@material-ui/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import './index.scss';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <CssBaseline />
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
