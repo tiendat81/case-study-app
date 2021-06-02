@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import InputField from 'components/FormFields/InputField';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -16,7 +17,15 @@ EmployeeForm.defaultProps = {
   onSubmit: null,
 };
 
+const useStyles = makeStyles({
+  button: {
+    textTransform: 'none',
+  },
+});
+
 function EmployeeForm({ initialValues, onSubmit }) {
+  const classes = useStyles();
+
   const schema = yup.object().shape({
     name: yup.string().required('Please enter your name.'),
     email: yup.string().email('Please enter a valid email.').required('Please enter your email.'),
@@ -50,6 +59,7 @@ function EmployeeForm({ initialValues, onSubmit }) {
       <InputField name="position" label="Position" form={form} />
 
       <Button
+        className={classes.button}
         disabled={isSubmitting || !isValid || isValidating}
         type="submit"
         color="primary"

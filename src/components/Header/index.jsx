@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     color: 'white',
   },
+  button: {
+    textTransform: 'none',
+  },
 }));
 
 export default function ButtonAppBar() {
@@ -36,14 +39,20 @@ export default function ButtonAppBar() {
           </IconButton>
           <Typography variant="h6" className={classes.home}>
             <NavLink exact to="/" className={classes.navLink}>
-              <Button color="inherit">Home</Button>
+              <Button className={classes.button} color="inherit">
+                Home
+              </Button>
             </NavLink>
           </Typography>
           <NavLink exact to="/" className={classes.navLink}>
-            <Button color="inherit">Counter</Button>
+            <Button className={classes.button} color="inherit">
+              Counter
+            </Button>
           </NavLink>
           <NavLink to="/employee" className={classes.navLink}>
-            <Button color="inherit">Employee</Button>
+            <Button className={classes.button} color="inherit">
+              Employee
+            </Button>
           </NavLink>
         </Toolbar>
       </AppBar>

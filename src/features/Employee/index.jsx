@@ -1,25 +1,36 @@
 import { Box, Button, Container, Dialog, DialogContent } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import employeeApi from 'api/employeeApi';
 import Loading from 'components/Loading';
-import React, { useEffect, useState } from 'react';
-import EmployeeForm from './components/EmployeeForm/EmployeeForm';
-import EmployeeList from './components/EmployeeList';
-import EmployeePagination from './components/Pagination';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 
-const ITEM_PER_PAGE = 5;
+const EmployeeForm = lazy(() => import('./components/EmployeeForm/EmployeeForm'));
+const EmployeeList = lazy(() => import('./components/EmployeeList'));
+const EmployeePagination = lazy(() => import('./components/Pagination'));
+
+const ITEMS_PER_PAGE = 5;
+
+const useStyles = makeStyles({
+  button: {
+    textTransform: 'none',
+  },
+});
 
 function Employee() {
+  const classes = useStyles();
+
   const [employeeList, setEmployeeList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedEmployee] = useState(null);
   const [loadEmployee, setLoadEmployee] = useState(false);
-  const totalPages = Math.ceil(employeeList?.length / ITEM_PER_PAGE);
   const [open, setOpen] = useState(false);
   const [filters, setFilters] = useState({
     page: 1,
-    limit: 5,
+    limit: ITEMS_PER_PAGE,
   });
+
+  const totalPages = Math.ceil(employeeList?.length / ITEMS_PER_PAGE);
 
   useEffect(() => {
     (async () => {
@@ -59,32 +70,39 @@ function Employee() {
 
   return (
     <Container>
-      {loading ? (
-        <Loading />
-      ) : (
-        <Box>
-          <Box mt={3}>
-            <EmployeeList employeeList={currentEmployees} />
-          </Box>
-          <Button color="primary" startIcon={<Add />} onClick={handleAddClick}>
-            New
-          </Button>
+      <Suspense fallback={<div>Loading...</div>}>
+        {loading ? (
+          <Loading />
+        ) : (
+          <Box>
+            <Box mt={3}>
+              <EmployeeList employeeList={currentEmployees} />
+            </Box>
+            <Button
+              className={classes.button}
+              color="primary"
+              startIcon={<Add />}
+              onClick={handleAddClick}
+            >
+              New
+            </Button>
 
-          <Dialog fullWidth open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogContent>
-              <EmployeeForm initialValues={selectedEmployee} onSubmit={handleSubmit} />
-            </DialogContent>
-          </Dialog>
+            <Dialog fullWidth open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+              <DialogContent>
+                <EmployeeForm initialValues={selectedEmployee} onSubmit={handleSubmit} />
+              </DialogContent>
+            </Dialog>
 
-          <Box display="flex" justifyContent="center">
-            <EmployeePagination
-              totalPages={totalPages}
-              currentPage={filters.page}
-              onPageChange={handlePageChange}
-            />
+            <Box display="flex" justifyContent="center">
+              <EmployeePagination
+                totalPages={totalPages}
+                currentPage={filters.page}
+                onPageChange={handlePageChange}
+              />
+            </Box>
           </Box>
-        </Box>
-      )}
+        )}
+      </Suspense>
     </Container>
   );
 }
