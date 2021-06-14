@@ -39,6 +39,7 @@ function Employee() {
         const data = await employeeApi.getAll();
         setEmployeeList(data);
         setLoading(false);
+        setLoadEmployee(true);
       } catch (error) {
         console.log('Failed to fetch employee list', error);
       }
@@ -53,7 +54,7 @@ function Employee() {
 
   const handleSubmit = async (values) => {
     await employeeApi.add(values);
-    setLoadEmployee(true);
+    setLoadEmployee(false);
     setOpen(false);
   };
 
